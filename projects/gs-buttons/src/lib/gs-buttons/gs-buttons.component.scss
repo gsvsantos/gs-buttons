@@ -1,0 +1,41 @@
+$branco: #f5f5f5;
+$primaria: #7b4bbb;
+$primaria-active: #8767dd;
+$transicao: 0.15s ease-in-out;
+
+.botao {
+  background-color: $primaria;
+  color: $branco;
+  border: none;
+  border-radius: 0.375rem;
+  transition:
+    color $transicao,
+    background-color $transicao,
+    border-color $transicao,
+    box-shadow $transicao;
+  display: inline-block;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.botao:hover {
+  background-color: $primaria;
+  box-shadow: 0 0 6px $primaria;
+}
+
+.botao:active {
+  background-color: $primaria-active;
+  box-shadow: 0 0 6px $primaria-active;
+}
+
+.botao-outline {
+  background-color: transparent;
+  color: $branco;
+  border: 1px solid $branco;
+}

@@ -1,0 +1,36 @@
+@if (tipo === tipoBotao.Default) {
+  <button
+    class="botao"
+    id="botao"
+    type="button"
+    [class.botao-outline]="variant === 'outline'"
+    (click)="onActivated()"
+  >
+    <i class="bi" [ngClass]="iconeBootstrap"></i>
+    {{ texto }}
+  </button>
+}
+@if (tipo === tipoBotao.Link) {
+  @if (!ehLinkExterno) {
+    <a
+      class="botao"
+      [routerLink]="link"
+      [attr.target]="target"
+      [class.botao-outline]="variant === 'outline'"
+    >
+      <i class="bi" [ngClass]="iconeBootstrap"></i>
+      {{ texto }}
+    </a>
+  } @else {
+    <a
+      class="botao"
+      [href]="link"
+      [attr.target]="target"
+      [attr.rel]="target === tipoGuia.NovaGuia ? 'noopener noreferrer' : null"
+      [class.botao-outline]="variant === 'outline'"
+    >
+      <i class="bi" [ngClass]="iconeBootstrap"></i>
+      {{ texto }}
+    </a>
+  }
+}

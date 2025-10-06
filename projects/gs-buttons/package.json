@@ -1,0 +1,23 @@
+{
+  "name": "gs-buttons",
+  "version": "1.0.0",
+  "author": "Gustavo Santos",
+  "license": "MIT",
+  "description": "Botão Angular 20 standalone",
+  "keywords": [
+    "angular",
+    "button",
+    "component"
+  ],
+  "peerDependencies": {
+    "@angular/common": "^20.3.0",
+    "@angular/core": "^20.3.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  }
+}
