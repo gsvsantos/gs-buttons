@@ -73,12 +73,12 @@ Inclua **Bootstrap Icons** no projeto (escolha uma):
 // exemplo.component.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { GsButton, gsTiposBotaoEnum, gsTiposGuiaEnum, gsVariant } from 'gs-buttons';
+import { GsButtons, gsTiposBotaoEnum, gsTiposGuiaEnum, gsVariant } from 'gs-buttons';
 
 @Component({
   selector: 'app-exemplo',
   standalone: true,
-  imports: [CommonModule, GsButton],
+  imports: [CommonModule, GsButtons],
   templateUrl: './exemplo.component.html'
 })
 export class ExemploComponent {
@@ -99,44 +99,44 @@ export class ExemploComponent {
 
 ### 1) Botão padrão (emite evento no clique)
 ```html
-<gs-button
+<gs-buttons
   [tipo]="gsTiposBotaoEnum.Default"
   [texto]="'Salvar'"
   [iconeBootstrap]="'bi-floppy2'"
   (modalState)="onSalvarClicked()">
-</gs-button>
+</gs-buttons>
 ```
 
 ### 2) Link interno (`routerLink`)
 ```html
-<gs-button
+<gs-buttons
   [tipo]="gsTiposBotaoEnum.Link"
   [texto]="'Voltar para Clientes'"
   [iconeBootstrap]="'bi-arrow-left'"
   [link]="'/clientes'">
-</gs-button>
+</gs-buttons>
 ```
 
 ### 3) Link externo (abre em nova guia com `rel="noopener noreferrer"`)
 ```html
-<gs-button
+<gs-buttons
   [tipo]="gsTiposBotaoEnum.Link"
   [texto]="'Documentação Angular'"
   [iconeBootstrap]="'bi-box-arrow-up-right'"
   [link]="'https://angular.dev/'"
   [target]="gsTiposGuiaEnum.NovaGuia">
-</gs-button>
+</gs-buttons>
 ```
 
 ### 4) Variante visual `Outline`
 ```html
-<gs-button
+<gs-buttons
   [tipo]="gsTiposBotaoEnum.Link"
   [texto]="'Ver detalhes'"
   [iconeBootstrap]="'bi-eye'"
   [link]="'/detalhes'"
   [variant]="gsVariant.Outline">
-</gs-button>
+</gs-buttons>
 ```
 
 ---
@@ -144,7 +144,7 @@ export class ExemploComponent {
 ## API de referência
 
 ### Selector
-- `<gs-button>`
+- `<gs-buttons>`
 
 ### Inputs
 

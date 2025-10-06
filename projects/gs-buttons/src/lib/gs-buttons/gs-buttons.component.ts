@@ -3,12 +3,12 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'gs-button',
+  selector: 'gs-buttons',
   imports: [NgClass, RouterLink],
   templateUrl: './gs-buttons.component.html',
   styleUrl: './gs-buttons.component.scss',
 })
-export class GsButton {
+export class GsButtons {
   @Input({ required: true }) public tipo!: gsTiposBotaoEnum;
   @Input({ required: true }) public texto!: string;
 
