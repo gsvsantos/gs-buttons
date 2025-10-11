@@ -58,7 +58,7 @@ export class GsButtons {
     return this.focusColor ?? null;
   }
   @HostBinding('style.--gs-btn-transition') public get _transition(): string | null {
-    return this.transition ?? null;
+    return this.transition?.trim() ?? null;
   }
   @HostBinding('style.--gs-btn-transition-props') public get _trProps(): string | null {
     const value = this.transitionProperties;
@@ -129,6 +129,10 @@ export class GsButtons {
     return this.router.serializeUrl(tree);
   }
 
+  public get useShorthand(): boolean {
+    return !!this.transition && this.transition.trim().length > 0;
+  }
+
   public onActivated(event?: MouseEvent): void {
     if (this.disabled) {
       event?.preventDefault();
@@ -156,7 +160,14 @@ export class GsButtons {
   private formatTime(value?: number | string): string | null {
     if (value === undefined || value === null) return null;
     if (typeof value === 'number') return `${value}ms`;
-    return value;
+
+    const str = String(value).trim();
+    const matchResult = /^(\d+(\.\d+)?)(ms|s)?$/i.exec(str);
+
+    if (!matchResult) return null;
+
+    const unit = matchResult[3]?.toLowerCase();
+    return unit ? str : `${matchResult[1]}ms`;
   }
 }
 

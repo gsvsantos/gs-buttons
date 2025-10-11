@@ -1,6 +1,7 @@
 @if (buttonType === buttonTypes.Default) {
   <button
     class="button"
+    [ngClass]="useShorthand ? 'transition-shorthand' : 'transition-longhands'"
     [attr.id]="buttonId || null"
     [attr.type]="buttonHtmlType"
     [attr.form]="formId || null"
@@ -15,6 +16,7 @@
 @if (buttonType === buttonTypes.Link) {
   <a
     class="button"
+    [ngClass]="useShorthand ? 'transition-shorthand' : 'transition-longhands'"
     [attr.id]="buttonId || null"
     [attr.href]="hrefValue"
     [routerLink]="!isExternalLink && !disabled ? link : null"

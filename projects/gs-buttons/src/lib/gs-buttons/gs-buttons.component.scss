@@ -17,11 +17,6 @@
   color: var(--gs-btn-fg);
   border: 1px solid var(--gs-btn-border);
   border-radius: 0.375rem;
-  transition-property: var(--gs-btn-transition-props);
-  transition-duration: var(--gs-btn-transition-dur);
-  transition-timing-function: var(--gs-btn-transition-ease);
-  transition-delay: var(--gs-btn-transition-delay);
-  transition: var(--gs-btn-transition);
   display: inline-block;
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
@@ -31,6 +26,17 @@
   text-decoration: none;
   vertical-align: middle;
   cursor: pointer;
+}
+
+.button.transition-longhands {
+  transition-property: var(--gs-btn-transition-props);
+  transition-duration: var(--gs-btn-transition-dur);
+  transition-timing-function: var(--gs-btn-transition-ease);
+  transition-delay: var(--gs-btn-transition-delay);
+}
+
+.button.transition-shorthand {
+  transition: var(--gs-btn-transition);
 }
 
 .button:focus-visible {
@@ -53,7 +59,7 @@
   color: var(--gs-btn-bg);
   border-color: var(--gs-btn-bg);
 }
-// arrumar cor do outline
+
 .button-outline:hover {
   color: var(--gs-btn-hover-fr);
   border-color: var(--gs-btn-hover-bg);
