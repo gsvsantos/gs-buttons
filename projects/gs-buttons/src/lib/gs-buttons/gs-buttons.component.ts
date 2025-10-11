@@ -1,6 +1,6 @@
 import { NgClass } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, UrlTree } from '@angular/router';
 
 @Component({
   selector: 'gs-buttons',
@@ -9,42 +9,79 @@ import { RouterLink } from '@angular/router';
   styleUrl: './gs-buttons.component.scss',
 })
 export class GsButtons {
-  @Input({ required: true }) public tipo!: gsTiposBotaoEnum;
-  @Input({ required: true }) public texto!: string;
+  @Input({ required: true }) public buttonType!: gsButtonTypeEnum;
+  @Input({ required: true }) public text!: string;
 
-  @Input() public iconeBootstrap!: string;
-  @Input() public link?: string;
-  @Input() public target?: gsTiposGuiaEnum;
+  @Input() public bootstrapIcon!: string;
+  @Input() public link?: string | string[] | UrlTree;
+  @Input() public target?: gsTabTargetEnum;
   @Input() public variant?: gsVariant;
+  @Input() public buttonId?: string;
+  @Input() public disabled: boolean = false;
 
-  @Output() public modalState: EventEmitter<void> = new EventEmitter<void>();
+  private readonly activatedEmitter: EventEmitter<void> = new EventEmitter<void>();
 
-  public tipoGuia = gsTiposGuiaEnum;
-  public tipoBotao = gsTiposBotaoEnum;
+  @Output() public activated: EventEmitter<void> = this.activatedEmitter;
 
-  public get ehLinkExterno(): boolean {
-    const linkNormalizado: string = (this.link ?? '').trim().toLowerCase();
+  // Mantido para evitar quebra de contratos existentes =)
+  @Output() public modalState: EventEmitter<void> = this.activatedEmitter;
+
+  public tabTarget = gsTabTargetEnum;
+  public buttonTypes = gsButtonTypeEnum;
+  public variantTypes = gsVariant;
+
+  public get isExternalLink(): boolean {
+    if (Array.isArray(this.link)) return false;
+    if (typeof this.link !== 'string') return false;
+    const normalized = this.link.trim().toLowerCase();
     return (
-      linkNormalizado.startsWith('http://') ||
-      linkNormalizado.startsWith('https://') ||
-      linkNormalizado.startsWith('mailto:') ||
-      linkNormalizado.startsWith('tel:')
+      normalized.startsWith('http://') ||
+      normalized.startsWith('https://') ||
+      normalized.startsWith('mailto:') ||
+      normalized.startsWith('tel:') ||
+      normalized.startsWith('//')
     );
   }
 
+  public get isOutline(): boolean {
+    return this.variant === gsVariant.Outline;
+  }
+
+  public get relAttr(): string | null {
+    return this.target === this.tabTarget.NewTab ? 'noopener noreferrer' : null;
+  }
+
+  public get ariaDisabledValue(): 'true' | null {
+    return this.disabled ? 'true' : null;
+  }
+
+  public get tabIndexValue(): number | null {
+    return this.disabled ? -1 : null;
+  }
+
   public onActivated(): void {
-    this.modalState.emit();
+    if (this.disabled) {
+      return;
+    }
+    this.activatedEmitter.emit();
+  }
+
+  public onLinkClick(event: MouseEvent): void {
+    if (this.disabled) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+    }
   }
 }
 
-export enum gsTiposBotaoEnum {
+export enum gsButtonTypeEnum {
   Default = 'button',
   Link = 'link',
 }
 
-export enum gsTiposGuiaEnum {
-  NovaGuia = '_blank',
-  MesmaGuia = '_self',
+export enum gsTabTargetEnum {
+  NewTab = '_blank',
+  SameTab = '_self',
 }
 
 export enum gsVariant {

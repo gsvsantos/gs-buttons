@@ -1,36 +1,30 @@
-@if (tipo === tipoBotao.Default) {
+@if (buttonType === buttonTypes.Default) {
   <button
-    class="botao"
-    id="botao"
+    class="button"
+    [attr.id]="buttonId || null"
     type="button"
-    [class.botao-outline]="variant === 'outline'"
+    [disabled]="disabled"
+    [class.button-outline]="variant === variantTypes.Outline"
     (click)="onActivated()"
   >
-    <i class="bi" [ngClass]="iconeBootstrap"></i>
-    {{ texto }}
+    <i class="bi" [ngClass]="bootstrapIcon" aria-hidden="true"></i>
+    {{ text }}
   </button>
 }
-@if (tipo === tipoBotao.Link) {
-  @if (!ehLinkExterno) {
-    <a
-      class="botao"
-      [routerLink]="link"
-      [attr.target]="target"
-      [class.botao-outline]="variant === 'outline'"
-    >
-      <i class="bi" [ngClass]="iconeBootstrap"></i>
-      {{ texto }}
-    </a>
-  } @else {
-    <a
-      class="botao"
-      [href]="link"
-      [attr.target]="target"
-      [attr.rel]="target === tipoGuia.NovaGuia ? 'noopener noreferrer' : null"
-      [class.botao-outline]="variant === 'outline'"
-    >
-      <i class="bi" [ngClass]="iconeBootstrap"></i>
-      {{ texto }}
-    </a>
-  }
+@if (buttonType === buttonTypes.Link) {
+  <a
+    class="button"
+    [attr.id]="buttonId || null"
+    [href]="isExternalLink ? link : null"
+    [routerLink]="!isExternalLink ? link : null"
+    [attr.target]="target"
+    [attr.rel]="relAttr"
+    [attr.aria-disabled]="ariaDisabledValue"
+    [attr.tabindex]="tabIndexValue"
+    [class.button-outline]="isOutline"
+    (click)="onLinkClick($event)"
+  >
+    <i class="bi" [ngClass]="bootstrapIcon" aria-hidden="true"></i>
+    {{ text }}
+  </a>
 }

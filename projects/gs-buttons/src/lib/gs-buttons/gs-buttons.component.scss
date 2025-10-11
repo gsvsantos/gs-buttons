@@ -1,18 +1,18 @@
-$branco: #f5f5f5;
-$primaria: #7b4bbb;
-$primaria-active: #8767dd;
-$transicao: 0.15s ease-in-out;
+$white: #f5f5f5;
+$primary: #7b4bbb;
+$primary-active: #6f3fb4;
+$transition: 0.15s ease-in-out;
 
-.botao {
-  background-color: $primaria;
-  color: $branco;
+.button {
+  background-color: $primary;
+  color: $white;
   border: none;
   border-radius: 0.375rem;
   transition:
-    color $transicao,
-    background-color $transicao,
-    border-color $transicao,
-    box-shadow $transicao;
+    color $transition,
+    background-color $transition,
+    border-color $transition,
+    box-shadow $transition;
   display: inline-block;
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
@@ -24,18 +24,43 @@ $transicao: 0.15s ease-in-out;
   cursor: pointer;
 }
 
-.botao:hover {
-  background-color: $primaria;
-  box-shadow: 0 0 6px $primaria;
+.button:focus-visible {
+  outline: 2px solid $white;
+  outline-offset: 2px;
 }
 
-.botao:active {
-  background-color: $primaria-active;
-  box-shadow: 0 0 6px $primaria-active;
+.button:hover {
+  background-color: $primary;
+  box-shadow: 0 0 6px $primary;
 }
 
-.botao-outline {
+.button:active {
+  background-color: $primary-active;
+  box-shadow: 0 0 6px $primary-active;
+}
+
+.button-outline {
   background-color: transparent;
-  color: $branco;
-  border: 1px solid $branco;
+  color: $white;
+  border: 1px solid $white;
+}
+
+.button[disabled],
+.button[aria-disabled='true'] {
+  opacity: 0.65;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.button[disabled]:hover,
+.button[aria-disabled='true']:hover,
+.button[disabled]:active,
+.button[aria-disabled='true']:active {
+  background-color: inherit;
+  box-shadow: none;
+}
+
+.button[disabled]:focus-visible,
+.button[aria-disabled='true']:focus-visible {
+  outline: none;
 }
