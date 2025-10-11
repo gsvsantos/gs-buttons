@@ -1,25 +1,36 @@
 {
   "name": "gs-buttons",
-  "version": "2.0.0",
+  "version": "3.0.0",
+  "description": "Componente de botão standalone para Angular 20 (Default/Link, Solid/Outline, theming por CSS vars e inputs).",
   "author": "Gustavo Santos",
   "license": "MIT",
-  "description": "Angular 20 standalone button component",
   "keywords": [
     "angular",
     "button",
     "component",
-    "standalone"
+    "standalone",
+    "accessibility",
+    "routerLink"
   ],
+  "type": "module",
+  "sideEffects": false,
   "peerDependencies": {
     "@angular/common": "^20.3.0",
     "@angular/core": "^20.3.0",
     "@angular/router": "^20.3.0"
   },
   "dependencies": {
-    "tslib": "^2.3.0"
+    "tslib": "^2.6.2"
   },
-  "sideEffects": false,
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gsvsantos/gs-buttons.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gsvsantos/gs-buttons/issues"
+  },
+  "homepage": "https://github.com/gsvsantos/gs-buttons#readme"
 }

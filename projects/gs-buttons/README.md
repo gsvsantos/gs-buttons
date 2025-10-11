@@ -1,264 +1,153 @@
-# gs-buttons — Botão reutilizável para Angular 20
 
-Componente **standalone** de botão com dois modos e duas variantes visuais:
+# gs-buttons · Angular 20
 
-- **Default**: renderiza um `<button>` que emite evento no clique.
-- **Link**: link **interno** (`routerLink`) ou **externo** (`href`), nas variantes **Solid** (cheio) ou **Outline** (contorno). Para externos com `_blank`, aplica `rel="noopener noreferrer"` automaticamente.
-
-> **Atenção (v2.0.0):** houve **renomeação de Inputs/Enums e classes CSS** (veja seção _[migração](#migra%C3%A7%C3%A3o-a-partir-da-v1)_).
+Componente **standalone** de botão para Angular 20 com dois modos (**Default** e **Link**), duas variantes (**Solid** e **Outline**) e theming via **CSS Custom Properties** ou *inputs*. Foco em acessibilidade, DX simples e compatibilidade com `routerLink` e `href`.
 
 ---
 
-## Tabela de conteúdos
-
-- [Instalação](#instala%C3%A7%C3%A3o)
-- [Requisitos](#requisitos)
-- [Começo rápido](come%C3%A7o-r%C3%A1pido)
-- [Exemplos de uso](exemplos-de-uso)
-- [API de referência](api-de-refer%C3%AAncia)
-    - [Selector](selector)
-    - [Inputs](inputs)
-    - [Outputs](outputs)
-    - [Enums exportados](enums-exportados)
-- [Comportamento](comportamento)
-- [Acessibilidade](acessibilidade)
-- [Migração a partir da v1](migra%C3%A7%C3%A3o-a-partir-da-v1)
-- [Changelog & Contribuição](changelog--contribui%C3%A7%C3%A3o)
-- [Licença](licen%C3%A7a)
-    
+## ✨ Recursos
+- **Standalone** (Angular 20) — importa direto no `imports:` do componente.
+- **Dois modos**: `Default` (renderiza `<button>`) e `Link` (renderiza `<a>`/`routerLink`).
+- **Duas variantes**: `Solid` e `Outline`.
+- **Theming** por CSS vars **ou** inputs (`color`, `textColor`, etc.).
+- **Transições**: longhands por padrão + **shorthand opcional** (`transition`) que sobrepõe os longhands.
+- **Acessibilidade**: `aria-disabled`, `tabindex`, `:focus-visible` e prevenção de clique quando desabilitado.
+- **Links externos**: aplica `rel="noopener noreferrer"` quando `target="_blank"`.
 
 ---
 
-## Instalação
-
+## 📦 Instalação
 ```bash
 npm i gs-buttons bootstrap-icons
 ```
 
-Inclua **Bootstrap Icons** no projeto (escolha uma):
-
-- **angular.json** (recomendado)
-```json
-{
-  "projects": {
-    "app": {
-      "architect": {
-        "build": {
-          "options": {
-            "styles": [
-              "node_modules/bootstrap-icons/font/bootstrap-icons.css",
-              "src/styles.css"
-            ]
-          }
-        }
-      }
-    }
-  }
-}
-```
-
-- **styles.css**
+Inclua **Bootstrap Icons** (uma opção):
 ```css
-@import 'bootstrap-icons/font/bootstrap-icons.css';
-```
-
-- **styles.scss**
-```scss
+/* styles.css / styles.scss */
 @import 'bootstrap-icons/font/bootstrap-icons.css';
 ```
 
 ---
 
-## Requisitos
-
-- Angular **20** (componentes standalone).
-- Projeto com **roteamento** configurado (para usar `Link` interno via `routerLink`).
-- `bootstrap-icons` disponível globalmente (classe base `bi`).
-
----
-
-## Começo rápido
-
+## 🚀 Começo rápido
 ```ts
-// exemplo.component.ts
+// app.component.ts
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { GsButtons, gsButtonTypeEnum, gsTabTargetEnum, gsVariant } from 'gs-buttons';
 
 @Component({
-  selector: 'app-exemplo',
+  selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, GsButtons],
-  templateUrl: './exemplo.component.html'
+  imports: [GsButtons],
+  templateUrl: './app.component.html'
 })
-export class ExemploComponent {
-  // Expor os enums para o template:
-  public buttonTypes = gsButtonTypeEnum;
-  public tabTarget = gsTabTargetEnum;
-  public variants = gsVariant;
+export class AppComponent {
+  buttonTypes = gsButtonTypeEnum;
+  tabTarget = gsTabTargetEnum;
+  variants = gsVariant;
 
-  public onSaveClicked(): void {
-    // sua lógica aqui
-  }
+  salvar() { /* sua lógica */ }
 }
 ```
 
----
-
-## Exemplos de uso
-
-### 1) Botão padrão (emite evento no clique)
-
 ```html
+<!-- app.component.html -->
 <gs-buttons
   [buttonType]="buttonTypes.Default"
   text="Salvar"
-  bootstrapIcon="bi-floppy2"
-  (activated)="onSaveClicked()">
+  bootstrapIcon="bi-check2"
+  (activated)="salvar()">
 </gs-buttons>
-```
 
-### 2) Link interno (`routerLink`)
-
-```html
 <gs-buttons
   [buttonType]="buttonTypes.Link"
-  text="Voltar para Clientes"
-  bootstrapIcon="bi-arrow-left"
-  link="/clientes">
+  text="Clientes"
+  [link]="['/clientes']">
 </gs-buttons>
-```
 
-### 2b) Link interno com **RouterLink commands** (`string[]`)
-
-```html
 <gs-buttons
   [buttonType]="buttonTypes.Link"
-  text="Filmes populares"
-  bootstrapIcon="bi-stars"
-  [link]="['/movie', 'popular']">
-</gs-buttons>
-```
-
-### 3) Link externo (abre em nova guia com `rel="noopener noreferrer"`)
-
-```html
-<gs-buttons
-  [buttonType]="buttonTypes.Link"
-  text="Documentação Angular"
-  bootstrapIcon="bi-box-arrow-up-right"
+  text="Angular Docs"
   link="https://angular.dev/"
   [target]="tabTarget.NewTab">
 </gs-buttons>
 ```
 
-### 4) Variante visual `Outline`
-
-```html
-<gs-buttons
-  [buttonType]="buttonTypes.Link"
-  text="Ver detalhes"
-  bootstrapIcon="bi-eye"
-  link="/detalhes"
-  [variant]="variants.Outline">
-</gs-buttons>
-```
-
-### 5) Estado desabilitado (para `<button>` e `<a>`)
-
-```html
-<gs-buttons
-  [buttonType]="buttonTypes.Link"
-  text="Ação indisponível"
-  bootstrapIcon="bi-slash-circle"
-  link="/restrito"
-  [disabled]="true">
-</gs-buttons>
-```
-
 ---
 
-## API de referência
+## 🧩 API (resumo)
 
-### Selector
-
-- `<gs-buttons>`
+**Selector:** `<gs-buttons>`
 
 ### Inputs
-
-| Propriedade     | Tipo                            | Obrigatório                       | Descrição                                                                                                                                                                                                                                                                                          |
-| --------------- | ------------------------------- | --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `buttonType`    | `gsButtonTypeEnum`              | **Sim**                           | Define o **modo** do componente: `Default` (renderiza `<button>` e emite evento) ou `Link` (renderiza `<a>`/`routerLink`). _(Não é o atributo HTML `type`.)_                                                                                                                                       |
-| `text`          | `string`                        | **Sim**                           | Rótulo exibido ao lado do ícone.                                                                                                                                                                                                                                                                   |
-| `bootstrapIcon` | `string`                        | Não                               | Classe do Bootstrap Icons (ex.: `'bi-plus'`, `'bi-floppy2'`). A classe base `bi` é aplicada pelo componente. Se omitido, o ícone não é renderizado.                                                                                                                                                |
-| `link`          | `string \| string[] \| UrlTree` | **Sim, quando `buttonType=Link`** | **Interno:** quando for `string[]` (RouterLink commands) ou `UrlTree`, usa `routerLink`. **Interno (string):** caminhos sem protocolo (ex.: `'/clientes'`) também viram `routerLink`. **Externo (string):** valores iniciando com `http://`, `https://`, `mailto:`, `tel:` (ou `//`) viram `href`. |
-| `target`        | `gsTabTargetEnum`               | Não _(padrão: `_self`)_           | `SameTab` → `_self` (padrão); `NewTab` → `_blank`. Com `_blank` **e** link externo, adiciona `rel="noopener noreferrer"`.                                                                                                                                                                          |
-| `variant`       | `gsVariant`                     | Não _(padrão: `Solid`)_           | Aparência: `Solid` (cheio) ou `Outline` (contorno).                                                                                                                                                                                                                                                |
-| `buttonId`      | `string`                        | Não                               | Define o atributo `id` do elemento raiz (`<button>` ou `<a>`). Útil para testes e acessibilidade.                                                                                                                                                                                                  |
-| `disabled`      | `boolean`                       | Não _(padrão: `false`)_           | Desabilita a interação: `<button>` recebe `disabled`; `<a>` recebe `aria-disabled="true"`, `tabindex="-1"` e bloqueio de navegação no clique.                                                                                                                                                      |
-
-> Observação: arrays (`['/movie', 'popular']`) e `UrlTree` **sempre** são tratados como navegação interna via `routerLink`. Para externo, use **string** com protocolo.
+| Propriedade | Tipo | Padrão | Descrição |
+| --- | --- | --- | --- |
+| `buttonType` | `gsButtonTypeEnum` | — | Modo: `Default` (button) ou `Link` (routerLink/href). |
+| `text` | `string` | — | Rótulo do botão/link. |
+| `bootstrapIcon` | `string` | — | Classe do Bootstrap Icons (ex.: `bi-plus`). |
+| `link` | `string \| string[] \| UrlTree` | — | Quando `buttonType=Link`. `string[]/UrlTree` → **interno** (routerLink). `string` com protocolo (`http`, `https`, `mailto`, `tel`, `//`) → **externo** (href). `string` sem protocolo (ex. `/clientes`) → **interno**. |
+| `target` | `gsTabTargetEnum` | `_self` | Abertura da navegação (`SameTab`/`NewTab`). |
+| `variant` | `gsVariant` | `Solid` | Aparência: `Solid` ou `Outline`. |
+| `buttonId` | `string` | — | Define `id` no elemento raiz. |
+| `buttonHtmlType` | `'button' \| 'submit' \| 'reset'` | `'button'` | Tipo do `<button>` quando `buttonType=Default`. |
+| `formId` | `string` | — | Id de formulário para *submit* externo (atributo HTML `form`). |
+| `emitOnClickWhenSubmit` | `boolean` | `false` | Evita duplicidade de eventos quando `buttonHtmlType='submit'` (use o `ngSubmit` do form). |
+| `disabled` | `boolean` | `false` | Desabilita interação (bloqueia clique e teclado). |
+| `color` / `textColor` / `hoverColor` / `activeColor` / `focusColor` | `string` | — | Override de cores via inputs. |
+| `transitionProperties` | `string \| string[]` | — | Longhand: `transition-property`. |
+| `transitionDuration` | `number \| string` | — | Longhand: aceita `200` → `200ms` ou `'0.2s'`. |
+| `transitionEase` | `string` | — | Longhand: `transition-timing-function`. |
+| `transitionDelay` | `number \| string` | — | Longhand: aceita `150` → `150ms` ou `'0.15s'`. |
+| `transition` | `string` | — | **Shorthand opcional**. Se definido, **sobrepõe os longhands**. |
 
 ### Outputs
-
-|Evento|Tipo|Quando é emitido|
-|---|---|---|
-|`activated`|`EventEmitter<void>`|**Apenas** quando `buttonType = Default` (clique no `<button>`).|
-|`modalState`|`EventEmitter<void>`|_Alias legado_ do `activated` (mantido para compatibilidade).|
+| Evento | Tipo | Descrição |
+| --- | --- | --- |
+| `activated` | `void` | Emitido ao clicar no **Default** (`<button>`). |
 
 ### Enums exportados
-
 ```ts
 export enum gsButtonTypeEnum { Default = 'button', Link = 'link' }
-export enum gsTabTargetEnum { NewTab = '_blank', SameTab = '_self' }
-export enum gsVariant { Solid = 'solid', Outline = 'outline' }
+export enum gsTabTargetEnum  { NewTab = '_blank', SameTab = '_self' }
+export enum gsVariant        { Solid = 'solid',  Outline = 'outline' }
 ```
 
 ---
 
-## Comportamento
+## 🎨 Theming rápido (CSS Custom Properties)
+```css
+gs-buttons {
+  --gs-btn-bg: #2563eb;
+  --gs-btn-fg: #ffffff;
+  --gs-btn-hover-bg: color-mix(in srgb, #2563eb, black 10%);
+  --gs-btn-active-bg: color-mix(in srgb, #2563eb, black 20%);
+  --gs-btn-focus: #fff;
+  --gs-btn-transition-props: color, background-color, border-color, box-shadow;
+  --gs-btn-transition-dur: .15s;
+  --gs-btn-transition-ease: ease-in-out;
+  --gs-btn-transition-delay: 0s;
+  /* shorthand opcional */
+  /* --gs-btn-transition: background-color .25s ease, box-shadow .25s ease; */
+}
+```
 
-- `Link` **externo** ocorre **apenas** quando `link` é **string** com protocolo: `http://`, `https://`, `mailto:`, `tel:` (ou `//`). Renderiza como `href` e, com `_blank`, aplica `rel="noopener noreferrer"`.
-- `Link` **interno** ocorre quando `link` é:
-    - `any[]` (RouterLink commands), ou
-    - `UrlTree`, ou
-    - **string sem protocolo** (ex.: `'/clientes'`).  
-        Nesses casos, o componente usa `routerLink`.
-- Com `target="_blank"` **e** link externo, o atributo `rel="noopener noreferrer"` é aplicado automaticamente.
-- Com `disabled = true`:
-    - `<button>`: recebe `disabled` e **não** emite evento.
-    - `<a>`: recebe `aria-disabled="true"`, `tabindex="-1"` e tem a navegação **bloqueada** via `click.preventDefault()`.
-
----
-
-## Acessibilidade
-
-- `text` funciona como rótulo visível do botão/link.
-- Navegação por teclado: `<button>` suporte nativo a `Enter`/`Space` e `<a>` suporte nativo a `Enter`.
-- Focus ring visível em `:focus-visible`; elementos desabilitados não exibem outline.
+Também é possível configurar via **inputs** (`color`, `textColor`, etc.) em tempo de execução.
 
 ---
 
-## Migração a partir da v1
-
-A **v2.0.0** renomeou propriedades/Enums e classes CSS:
-
-- **Inputs**: `tipo → buttonType`, `texto → text`, `iconeBootstrap → bootstrapIcon`, `idBotao → buttonId`, `desabilitado → disabled`.
-- **Enums**: `gsTiposBotaoEnum → gsButtonTypeEnum`, `gsTiposGuiaEnum → gsTabTargetEnum` (valores equivalentes), `gsVariant` permanece igual.
-- **CSS**: `.botao`/`.botao-outline` → `.button`/`.button-outline`.
-- **Output**: use `(activated)`; `(modalState)` permanece como **alias** para compatibilidade.
-
-> Se precisar permanecer em 1.x, mantenha a versão anterior. Na 2.x, ajuste chamadas e imports conforme acima.
+## ♿ Acessibilidade
+- `aria-disabled`, `tabindex="-1"` e bloqueio de navegação para `<a>` desabilitado.
+- `:focus-visible` com *focus ring* padrão.
+- Use `text` como rótulo visível; para ícones sem texto, forneça `aria-label` no host (`<gs-buttons aria-label="...">`).
 
 ---
 
-## Changelog & Contribuição
-
-- Acompanhe **Releases** no GitHub para notas de versão e mudanças.
-- Issues e PRs são bem-vindos.
+## ✅ Requisitos
+- Angular **20**
+- Roteamento configurado para `routerLink` (se for usar modo **Link**).
+- `bootstrap-icons` disponível globalmente (classe base `bi`).
 
 ---
 
-## Licença
-
-Distribuído sob **MIT**. Veja o arquivo **LICENSE** no repositório.
+## 📄 Licença
+[MIT](LICENSE)

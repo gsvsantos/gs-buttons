@@ -2,10 +2,11 @@
   <button
     class="button"
     [attr.id]="buttonId || null"
-    type="button"
+    [attr.type]="buttonHtmlType"
+    [attr.form]="formId || null"
     [disabled]="disabled"
-    [class.button-outline]="variant === variantTypes.Outline"
-    (click)="onActivated()"
+    [class.button-outline]="isOutline"
+    (click)="onActivated($event)"
   >
     <i class="bi" [ngClass]="bootstrapIcon" aria-hidden="true"></i>
     {{ text }}
@@ -15,14 +16,15 @@
   <a
     class="button"
     [attr.id]="buttonId || null"
-    [href]="isExternalLink ? link : null"
-    [routerLink]="!isExternalLink ? link : null"
+    [attr.href]="hrefValue"
+    [routerLink]="!isExternalLink && !disabled ? link : null"
     [attr.target]="target"
     [attr.rel]="relAttr"
     [attr.aria-disabled]="ariaDisabledValue"
     [attr.tabindex]="tabIndexValue"
     [class.button-outline]="isOutline"
     (click)="onLinkClick($event)"
+    (auxclick)="onLinkAuxClick($event)"
   >
     <i class="bi" [ngClass]="bootstrapIcon" aria-hidden="true"></i>
     {{ text }}

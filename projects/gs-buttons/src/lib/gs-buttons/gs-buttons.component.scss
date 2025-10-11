@@ -1,18 +1,27 @@
-$white: #f5f5f5;
-$primary: #7b4bbb;
-$primary-active: #6f3fb4;
-$transition: 0.15s ease-in-out;
+:host {
+  --gs-btn-bg: #7b4bbb;
+  --gs-btn-fg: #f5f5f5;
+  --gs-btn-border: transparent;
+  --gs-btn-hover-bg: color-mix(in srgb, var(--gs-btn-bg), black 10%);
+  --gs-btn-active-bg: color-mix(in srgb, var(--gs-btn-bg), black 20%);
+  --gs-btn-focus: #f5f5f5;
+  --gs-btn-shadow: 0 0 6px var(--gs-btn-bg);
+  --gs-btn-transition-props: color, background-color, border-color, box-shadow;
+  --gs-btn-transition-dur: 0.15s;
+  --gs-btn-transition-ease: ease-in-out;
+  --gs-btn-transition-delay: 0s;
+}
 
 .button {
-  background-color: $primary;
-  color: $white;
-  border: none;
+  background-color: var(--gs-btn-bg);
+  color: var(--gs-btn-fg);
+  border: 1px solid var(--gs-btn-border);
   border-radius: 0.375rem;
-  transition:
-    color $transition,
-    background-color $transition,
-    border-color $transition,
-    box-shadow $transition;
+  transition-property: var(--gs-btn-transition-props);
+  transition-duration: var(--gs-btn-transition-dur);
+  transition-timing-function: var(--gs-btn-transition-ease);
+  transition-delay: var(--gs-btn-transition-delay);
+  transition: var(--gs-btn-transition);
   display: inline-block;
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
@@ -25,24 +34,35 @@ $transition: 0.15s ease-in-out;
 }
 
 .button:focus-visible {
-  outline: 2px solid $white;
+  outline: 2px solid var(--gs-btn-focus);
   outline-offset: 2px;
 }
 
 .button:hover {
-  background-color: $primary;
-  box-shadow: 0 0 6px $primary;
+  background-color: var(--gs-btn-hover-bg);
+  box-shadow: var(--gs-btn-shadow);
 }
 
 .button:active {
-  background-color: $primary-active;
-  box-shadow: 0 0 6px $primary-active;
+  background-color: var(--gs-btn-active-bg);
+  box-shadow: 0 0 6px var(--gs-btn-active-bg);
 }
 
 .button-outline {
   background-color: transparent;
-  color: $white;
-  border: 1px solid $white;
+  color: var(--gs-btn-bg);
+  border-color: var(--gs-btn-bg);
+}
+// arrumar cor do outline
+.button-outline:hover {
+  color: var(--gs-btn-hover-fr);
+  border-color: var(--gs-btn-hover-bg);
+  box-shadow: 0 0 6px var(--gs-btn-hover-bg);
+}
+
+.button-outline:active {
+  color: var(--gs-btn-active-bg);
+  border-color: var(--gs-btn-active-bg);
 }
 
 .button[disabled],
@@ -50,6 +70,7 @@ $transition: 0.15s ease-in-out;
   opacity: 0.65;
   cursor: not-allowed;
   box-shadow: none;
+  pointer-events: none;
 }
 
 .button[disabled]:hover,
