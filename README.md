@@ -5,6 +5,8 @@ Componente **standalone** de botão para Angular 20 com dois modos (**Default** 
 
 ---
 
+[![wakatime](https://wakatime.com/badge/user/d66fe803-196c-4729-b330-f8a026db44ec/project/7b1b87dc-91e2-4c23-8ea8-b778bd995be6.svg)](https://wakatime.com/badge/user/d66fe803-196c-4729-b330-f8a026db44ec/project/7b1b87dc-91e2-4c23-8ea8-b778bd995be6)
+
 ## ✨ Recursos
 - **Standalone** (Angular 20) — importa direto no `imports:` do componente.
 - **Dois modos**: `Default` (renderiza `<button>`) e `Link` (renderiza `<a>`/`routerLink`).
