@@ -12,7 +12,7 @@
   --gs-btn-transition-delay: 0s;
 }
 
-.button {
+.gs-button {
   background-color: var(--gs-btn-bg);
   color: var(--gs-btn-fg);
   border: 1px solid var(--gs-btn-border);
@@ -28,66 +28,65 @@
   cursor: pointer;
 }
 
-.button.transition-longhands {
+.gs-button.transition-longhands {
   transition-property: var(--gs-btn-transition-props);
   transition-duration: var(--gs-btn-transition-dur);
   transition-timing-function: var(--gs-btn-transition-ease);
   transition-delay: var(--gs-btn-transition-delay);
 }
 
-.button.transition-shorthand {
+.gs-button.transition-shorthand {
   transition: var(--gs-btn-transition);
 }
 
-.button:focus-visible {
+.gs-button:focus-visible {
   outline: 2px solid var(--gs-btn-focus);
   outline-offset: 2px;
 }
 
-.button:hover {
+.gs-button:hover {
   background-color: var(--gs-btn-hover-bg);
   box-shadow: var(--gs-btn-shadow);
 }
 
-.button:active {
+.gs-button:active {
   background-color: var(--gs-btn-active-bg);
   box-shadow: 0 0 6px var(--gs-btn-active-bg);
 }
 
-.button-outline {
+.gs-button-outline {
   background-color: transparent;
   color: var(--gs-btn-bg);
   border-color: var(--gs-btn-bg);
 }
 
-.button-outline:hover {
+.gs-button-outline:hover {
   color: var(--gs-btn-hover-fr);
   border-color: var(--gs-btn-hover-bg);
   box-shadow: 0 0 6px var(--gs-btn-hover-bg);
 }
 
-.button-outline:active {
-  color: var(--gs-btn-active-bg);
+.gs-button-outline:active {
   border-color: var(--gs-btn-active-bg);
 }
 
-.button[disabled],
-.button[aria-disabled='true'] {
+.gs-button[disabled],
+.gs-button[aria-disabled='true'] {
   opacity: 0.65;
   cursor: not-allowed;
   box-shadow: none;
   pointer-events: none;
 }
 
-.button[disabled]:hover,
-.button[aria-disabled='true']:hover,
-.button[disabled]:active,
-.button[aria-disabled='true']:active {
+.gs-button[disabled]:hover,
+.gs-button[aria-disabled='true']:hover,
+.gs-button[disabled]:active,
+.gs-button[aria-disabled='true']:active {
   background-color: inherit;
   box-shadow: none;
 }
 
-.button[disabled]:focus-visible,
-.button[aria-disabled='true']:focus-visible {
+.gs-button[disabled]:focus-visible,
+.gs-button[aria-disabled='true']:focus-visible {
   outline: none;
 }

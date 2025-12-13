@@ -1,12 +1,12 @@
 @if (buttonType === buttonTypes.Default) {
   <button
-    class="button"
+    class="gs-button"
     [ngClass]="useShorthand ? 'transition-shorthand' : 'transition-longhands'"
     [attr.id]="buttonId || null"
     [attr.type]="buttonHtmlType"
     [attr.form]="formId || null"
     [disabled]="disabled"
-    [class.button-outline]="isOutline"
+    [class.gs-button-outline]="isOutline"
     (click)="onActivated($event)"
   >
     <i class="bi" [ngClass]="bootstrapIcon" aria-hidden="true"></i>
@@ -15,7 +15,7 @@
 }
 @if (buttonType === buttonTypes.Link) {
   <a
-    class="button"
+    class="gs-button"
     [ngClass]="useShorthand ? 'transition-shorthand' : 'transition-longhands'"
     [attr.id]="buttonId || null"
     [attr.href]="hrefValue"
@@ -24,7 +24,7 @@
     [attr.rel]="relAttr"
     [attr.aria-disabled]="ariaDisabledValue"
     [attr.tabindex]="tabIndexValue"
-    [class.button-outline]="isOutline"
+    [class.gs-button-outline]="isOutline"
     (click)="onLinkClick($event)"
     (auxclick)="onLinkAuxClick($event)"
   >
