@@ -1,6 +1,6 @@
 {
   "name": "gs-buttons",
-  "version": "3.1.0",
+  "version": "3.1.2",
   "description": "Componente de botão standalone para Angular 20 (Default/Link, Solid/Outline, theming por CSS vars e inputs).",
   "author": "Gustavo Santos",
   "license": "MIT",

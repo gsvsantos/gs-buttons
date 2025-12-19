@@ -14,21 +14,39 @@
   </button>
 }
 @if (buttonType === buttonTypes.Link) {
-  <a
-    class="gs-button"
-    [ngClass]="useShorthand ? 'transition-shorthand' : 'transition-longhands'"
-    [attr.id]="buttonId || null"
-    [attr.href]="hrefValue"
-    [routerLink]="!isExternalLink && !disabled ? link : null"
-    [attr.target]="target"
-    [attr.rel]="relAttr"
-    [attr.aria-disabled]="ariaDisabledValue"
-    [attr.tabindex]="tabIndexValue"
-    [class.gs-button-outline]="isOutline"
-    (click)="onLinkClick($event)"
-    (auxclick)="onLinkAuxClick($event)"
-  >
-    <i class="bi" [ngClass]="bootstrapIcon" aria-hidden="true"></i>
-    {{ text }}
-  </a>
+  @if (isExternalLink) {
+    <a
+      class="gs-button"
+      [ngClass]="useShorthand ? 'transition-shorthand' : 'transition-longhands'"
+      [attr.id]="buttonId || null"
+      [attr.href]="hrefValue"
+      [attr.target]="target"
+      [attr.rel]="relAttr"
+      [attr.aria-disabled]="ariaDisabledValue"
+      [attr.tabindex]="tabIndexValue"
+      [class.gs-button-outline]="isOutline"
+      (click)="onLinkClick($event)"
+      (auxclick)="onLinkAuxClick($event)"
+    >
+      <i class="bi" [ngClass]="bootstrapIcon" aria-hidden="true"></i>
+      {{ text }}
+    </a>
+  } @else {
+    <a
+      class="gs-button"
+      [ngClass]="useShorthand ? 'transition-shorthand' : 'transition-longhands'"
+      [attr.id]="buttonId || null"
+      [routerLink]="!disabled ? link : null"
+      [attr.target]="target"
+      [attr.rel]="relAttr"
+      [attr.aria-disabled]="ariaDisabledValue"
+      [attr.tabindex]="tabIndexValue"
+      [class.gs-button-outline]="isOutline"
+      (click)="onLinkClick($event)"
+      (auxclick)="onLinkAuxClick($event)"
+    >
+      <i class="bi" [ngClass]="bootstrapIcon" aria-hidden="true"></i>
+      {{ text }}
+    </a>
+  }
 }
